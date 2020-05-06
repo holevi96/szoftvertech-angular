@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>Munka hozzáadása</h1>
+<div mat-dialog-content>
+    <mat-form-field class="full-width">
+        <mat-label>Munka neve</mat-label>
+        <input matInput placeholder="Munka megnevezése" [(ngModel)]="work.neve">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <mat-label>Munkakör</mat-label>
+        <mat-select [(value)]="work.munkakor">
+            <mat-option>Kérjük válasszon!</mat-option>
+            <mat-option value="Futár">Futár</mat-option>
+            <mat-option value="Árufeltöltő">Árufeltöltő</mat-option>
+            <mat-option value="Programozó">Programozó</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Leírás</mat-label>
+    <input matInput placeholder="Munka leírása" [(ngModel)]="work.leiras">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Jelleg</mat-label>
+    <input matInput placeholder="Munka jellege" [(ngModel)]="work.jelleg">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Mégse</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="work" cdkFocusInitial>Munka hozzáadása</button>
+</div>
