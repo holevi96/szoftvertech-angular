@@ -22,16 +22,15 @@ export class LoginComponent implements OnInit {
 
   login(){
     this.apiService.login(this.user).subscribe((token: any) => {
-      localStorage.setItem("jwt", token.accessToken);
-      this.router.navigate(["/works"]);
+      localStorage.setItem('jwt', token.accessToken);
+      this.router.navigate(['/works']);
     });
   }
-
   register(){
     const dialogRef = this.dialog.open(RegisterComponent, {width: '450px'});
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
-      this.apiService.register(result).subscribe(resp=>{
+      this.apiService.register(result).subscribe(resp => {
         alert('Sikeres regisztráció!');
       })
     });

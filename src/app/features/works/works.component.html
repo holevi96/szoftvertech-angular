@@ -1,6 +1,5 @@
 <div class="wrapper">
   <div class="header">
-    <p class="left">Munkák</p>
     <p class="right">
       <button mat-raised-button color="primary" (click)="addNew()">Új Munka hozzáadása</button>
     </p>
@@ -15,7 +14,7 @@
 
       <ng-container matColumnDef="Név">
         <th mat-header-cell *matHeaderCellDef> Név </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+        <td mat-cell *matCellDef="let element"> {{element.neve}}</td>
       </ng-container>
 
       <ng-container matColumnDef="Munkakör">

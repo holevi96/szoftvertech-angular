@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from '../../shared/api.service';
-import { AddSemesterComponent } from '../dialog/add-semester/add-semester.component';
-import { EditSemesterComponent } from '../dialog/edit-semester/edit-semester.component';
+import { AddWorkComponent } from '../dialog/add-works/add-work.component';
+import { EditWorkComponent } from '../dialog/edit-works/edit-work.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-works',
@@ -15,7 +16,11 @@ export class WorksComponent implements OnInit {
   dataSource;
   loading = true;
 
-  constructor(public dialog: MatDialog, private apiService: ApiService) {}
+  constructor(public dialog: MatDialog, private apiService: ApiService, private router: Router) {
+    if (!apiService.isLoggedIn()){
+      router.navigate(['/login']);
+    }
+  }
 
   ngOnInit(): void{
     this.getWorks();
@@ -27,7 +32,7 @@ export class WorksComponent implements OnInit {
       this.dataSource = resp.items.map(x => {
         return {
           id: x.id,
-          name: x.neve,
+          neve: x.neve,
           munkakor: x.munkakor,
           leiras: x.leiras,
           jelleg: x.jelleg
@@ -38,11 +43,12 @@ export class WorksComponent implements OnInit {
   }
 
   addNew(){
-    const dialogRef = this.dialog.open(AddSemesterComponent, {
+    const dialogRef = this.dialog.open(AddWorkComponent, {
       width: '450px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
       this.apiService.addWork(result).subscribe(resp => {
         this.getWorks();
         alert('Sikeres munka hozzáadás!');
@@ -51,20 +57,21 @@ export class WorksComponent implements OnInit {
   }
 
   delete(id){
-    this.apiService.deleteSemester(id).subscribe(resp => {
+    this.apiService.deleteWork(id).subscribe(resp => {
       this.getWorks();
       alert('Sikeres törlés!');
     });
   }
 
   edit(element){
-    const dialogRef = this.dialog.open(EditSemesterComponent, {
+    const dialogRef = this.dialog.open(EditWorkComponent, {
       width: '450px',
       data: element
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.apiService.editSemester(element.id, result).subscribe(resp => {
+      console.log(result)
+      this.apiService.editWork(element.id, result).subscribe(resp => {
         this.getWorks();
         alert('Sikeres munka frissítés!');
       });
